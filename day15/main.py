@@ -14,11 +14,13 @@ coins = {
     "pennies": 0.01
 }
 
+profit = 0
+
 
 def is_resource_sufficient(order_ingredients):
     for item in order_ingredients:
         if order_ingredients[item] > resources[item]:
-            print(f"​Sorry there is not enough {item}.")
+            print(f"Sorry there is not enough {item}.")
             return False
         else:
             return True
@@ -33,9 +35,11 @@ def calculate_value():
 
 
 def coffee_make(order_ingredients, total_value):
+    global profit
     for item in order_ingredients:
         resources[item] = resources[item] - order_ingredients[item]
-    if total_value > MENU[user_choice]["cost"]:
+    if total_value >= MENU[user_choice]["cost"]:
+        profit += MENU[user_choice]["cost"]
         return total_value - MENU[user_choice]["cost"]
     else:
         return 0
@@ -51,7 +55,7 @@ while is_continue:
         print(f"Water: {resources["water"]}ml")
         print(f"Milk: {resources["milk"]}ml")
         print(f"Coffee: {resources["coffee"]}g")
-        print(f"Money: ")
+        print(f"Money: {profit}")
     else:
         order_ingredients = MENU[user_choice]["ingredients"]
         if is_resource_sufficient(order_ingredients):
